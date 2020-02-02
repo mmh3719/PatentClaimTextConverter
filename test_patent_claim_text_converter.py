@@ -1,5 +1,5 @@
 import unittest
-from patent_claim_text_converter import convert_claim_text
+from patent_claim_text_converter import *
 
 sample_claim_text = "1. A product tag system, comprising:\
 an RFID tag adapted for attachment to a product;\
@@ -50,6 +50,15 @@ displaying, at said point of sale, said bar code information in a form which can
 
 
 class PatentClaimTextConverterTest(unittest.TestCase):
+
+    def test_create_claim_marker(self):
+        self.assertEqual(create_claim_marker(1), '1.')
+        self.assertEqual(create_claim_marker(25), '25.')
+
+    def test_find_claim_numbers(self):
+        sample_claim_numbers = find_claim_numbers(sample_claim_text)
+        self.assertEqual(sample_claim_numbers[0], 0)
+        self.assertEqual(len(sample_claim_numbers), 29)
 
     def test_json_conversion(self):
         # TODO: Add a test case here
