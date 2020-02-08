@@ -48,6 +48,14 @@ displaying, at said point of sale, said bar code information in a form which can
 28. The method of claim 20, further comprising displaying said bar code information in human readable form.\
 29. The method of claim 20, further comprising the step of writing to said tag, at said point of sale, information regarding said sale of said product, whereby said product sale information is available for subsequent use."
 
+sample_claim_text_1 = "1. A product tag system, comprising:\
+an RFID tag adapted for attachment to a product;\
+at least one data store in said tag for bar code information relating to said product;\
+a tag detacher for removing said tag from said product at a point of sale;\
+an RFID tag reader for retrieving said bar code information from said tag when said tag is placed in said tag detacher; and,\
+a display for presenting said bar code information in a form which can be scanned by a conventional bar code scanner, said display associated with said tag detacher and said RFID tag reader at said point of sale.\
+2. The system of claim 1, wherein said tag further comprises a detectable EAS element."
+
 
 class PatentClaimTextConverterTest(unittest.TestCase):
 
@@ -61,5 +69,17 @@ class PatentClaimTextConverterTest(unittest.TestCase):
         self.assertEqual(len(sample_claim_numbers), 29)
 
     def test_json_conversion(self):
-        # TODO: Add a test case here
-        pass
+        self.assertEqual(json.loads(convert_claim_text(sample_claim_text_1)), json.loads(
+            '{\
+              "1": [\
+                "A product tag system, comprising:an RFID tag adapted for attachment to a product",\
+                "at least one data store in said tag for bar code information relating to said product",\
+                "a tag detacher for removing said tag from said product at a point of sale",\
+                "an RFID tag reader for retrieving said bar code information from said tag when said tag is placed in said tag detacher",\
+                " and,a display for presenting said bar code information in a form which can be scanned by a conventional bar code scanner, said display associated with said tag detacher and said RFID tag reader at said point of sale."\
+              ],\
+              "2": [\
+                "The system of claim 1, wherein said tag further comprises a detectable EAS element."\
+              ]\
+            }'
+        ))
